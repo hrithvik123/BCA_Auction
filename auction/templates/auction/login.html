@@ -1,0 +1,51 @@
+{% extends "auction/base.html" %}
+{% load crispy_forms_tags %}
+{% load account socialaccount %}
+    {% block content %}
+    {% get_providers as socialaccount_providers %}
+
+    {% if socialaccount_providers %}
+        <p>Please sign in with one
+        of your existing third party accounts. Or, <a href="{% url 'register' %}">sign up</a>
+        for a {{ site_name }} account and sign in below:</p>
+
+        <div class="socialaccount_ballot">
+
+        <ul class="socialaccount_providers">
+            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+        </ul>
+
+        <div class="login-or">or</div>
+
+        </div>
+
+        {% include "socialaccount/snippets/login_extra.html" %}
+
+        {% else %}
+        <p>If you have not created an account yet, then please
+        <a href="{% url 'register' %}">sign up</a> first.</p>
+    {% endif %}
+    <div class="content-section">
+        <form method='POST'>
+            {% csrf_token %}
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-4">Sign In Here</legend>
+              {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+              <button type="submit" class="btn btn-outline-info">Login</button>
+              <small class="text-muted ml-2">
+                  <a class="ml-2" href="#">Forgot password?</a>
+              </small>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+
+
+          <small class="text-muted">
+              Need an account ?<a class="ml-2" href="{%url 'register' %}">Sign Up Now</a>
+          </small>
+
+        </div>
+    </div>
+    {% endblock content%} 

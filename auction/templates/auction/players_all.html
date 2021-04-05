@@ -1,0 +1,30 @@
+{% extends 'auction/base.html' %}
+{% block title %}<title>Players List</title>{% endblock title %}
+{% block content %}
+    <div class="container">
+        <h2>List of all players in database</h2>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Original Team</th>
+                    <th>Current Team</th>
+                </tr>
+            </thead>
+            <tbody>
+    {% for player in players%}
+            <tr>
+                <td>{{ player.first_name }}</td>
+                <td>{{ player.last_name }}</td>
+                <td>{{ player.original_team }}</td>
+                <td>{{ player.team }}</td>
+            </tr>
+    {% endfor %}
+            </tbody>
+        </table>
+        {% if user.is_superuser %}
+        <a class="btn btn-outline-info" href="{% url 'player-new' %}">Add player</a>
+        {% endif %}
+    </div>
+{% endblock content %} 

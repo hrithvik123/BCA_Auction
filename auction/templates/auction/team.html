@@ -1,0 +1,25 @@
+{% extends "auction/base.html" %}
+{% load crispy_forms_tags %}
+{% block  title%}<title>My Team</title>{% endblock title %}
+{%block content%}
+    <div class="content-section">
+    <div class="media">
+      <div class="media-body">
+        <h2 class="account-heading">{{ user.team.name }}</h2>
+        <p class="text-secondary">{{ user.team.balance }}</p>
+      </div>
+    </div>
+
+    <div class="content-section">
+    <form method='POST'>
+        {% csrf_token %}
+        <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Update Team</legend>
+        {{ form }}
+        </fieldset>
+        <div class="form-group">
+        <button type="submit" class="btn btn-outline-info">Update</button>
+        </div>
+    </form>
+</div>
+{%endblock content%}

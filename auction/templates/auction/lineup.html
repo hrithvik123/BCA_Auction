@@ -1,0 +1,27 @@
+{% extends 'auction/base.html' %}
+{% block title %}<title>Team Lineup</title>{% endblock title %}
+{% block content %}
+    <div class="container">
+        <h2>{{ user.team.name }}</h2>
+        <p>List of players in your team</p>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Original Team</th>
+                </tr>
+            </thead>
+            <tbody>
+    {% for player in players%}
+            <tr>
+                <td>{{ player.first_name }}</td>
+                <td>{{ player.last_name }}</td>
+                <td>{{ player.original_team }}</td>
+            </tr>
+    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a class="btn btn-outline-info" href="{% url 'team-edit' user.team.id %}">Change Team Name</a>
+{% endblock content %} 

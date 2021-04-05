@@ -1,0 +1,25 @@
+{% extends 'auction/base.html' %}
+{% block title %}<title>Players List</title>{% endblock title %}
+{% block content %}
+    <div class="container">
+        <h2>List of all bids in database</h2>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Team Name</th>
+                    <th>Player Name</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+    {% for bid in bids%}
+            <tr>
+                <td>{{ bid.team }}</td>
+                <td>{{ bid.auction_id.player_id }}</td>
+                <td>{{ bid.amount }}</td>
+            </tr>
+    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %} 

@@ -1,0 +1,23 @@
+{% extends "auction/base.html" %}
+{% load crispy_forms_tags %}
+  {% block content %}
+      <!-- {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+      {% endif %} -->
+      <div class="content-section">
+          <form method='POST'>
+              {% csrf_token %}
+              <fieldset class="form-group">
+                <legend class="border-bottom mb-4">New bid</legend>
+                {{ form|crispy }}
+              </fieldset>
+              <div class="form-group">
+                <button type="submit" class="btn btn-outline-info">Place Bid</button>
+              </div>
+          </form>
+      </div>
+  {% endblock content %}
