@@ -1,6 +1,6 @@
 # BCA Auction
 
-BCA Auction is an auction system built using Django. Below is everything you need to get started with the BCA Auction app app.
+BCA Auction is an auction system built using Django. Below is everything you need to get started with the BCA Auction app.
 
 ## Table of contents
 - [Running Locally](#running-locally)
