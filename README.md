@@ -62,6 +62,7 @@ Available subcommands:
 
 ### Running BCA Auction
 
+To make sure you have all dependencies instlled, run ```pip install -r requirements.txt```. 
 To run the project simply run ```python manage.py runserver``` and you can naviagte to [http://localhost:8000](http://localhost:8000) to see the server.
 
 ## Contributor documentation
