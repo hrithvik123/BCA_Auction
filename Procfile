@@ -1,0 +1,1 @@
+web: gunicorn BCA.wsgi --log-file -
