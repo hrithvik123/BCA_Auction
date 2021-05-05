@@ -1,10 +1,11 @@
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.dispatch import receiver
-from .models import Team, Player, Bidder, Auction, Bid, Chat
+from .models import Team, Player, Bidder, Auction, Bid, Stats
 from django.utils import timezone
 
 
+# make a bid
 @receiver(post_save, sender=Bid)
 def create_bid(sender, instance, created, **kwargs):
     if created:
@@ -22,9 +23,19 @@ def create_bid(sender, instance, created, **kwargs):
                 instance.team.save()
 
 
-# edit
+# change auction status
 @receiver(post_save, sender=Auction)
 def save_auction(sender, instance, created, **kwargs):
     if not created:
         instance.player_id.team = instance.winning_team
         instance.player_id.save()
+
+
+@receiver(post_save, sender=Player)
+def create_stats(sender, instance, created, **kwargs):
+    if created:
+        stats_row = Stats()
+        stats_row.player = instance
+        stats_row.runs = 0
+        stats_row.wickets = 0
+        stats_row.save()

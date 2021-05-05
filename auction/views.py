@@ -101,7 +101,7 @@ class AuctionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 class PlayerCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = models.Player
-    fields = ['first_name', 'last_name', 'original_team']
+    fields = ['name', 'original_team']
     success_url = '/players/list'
     context_object_name = 'players'
 
@@ -144,11 +144,11 @@ class BidCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
                 self.request, f'You cannot bid more than your balance.')
             return HttpResponseRedirect(reverse('bid-new'))
 
-    # def get_form(self, *args, **kwargs):
-    #     form = super(BidCreateView, self).get_form(*args, **kwargs)
-    #     form.fields['auction_id'].queryset = models.Auction.objects.filter(
-    #         end_time <= timezone.now())
-    #     return form
+    def get_form(self, *args, **kwargs):
+        form = super(BidCreateView, self).get_form(*args, **kwargs)
+        form.fields['auction_id'].queryset = models.Auction.objects.filter(
+            end_time__gte=timezone.now())
+        return form
 
     def test_func(self):
         models.Team.objects.get_or_create(owner_id=self.request.user)

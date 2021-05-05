@@ -7,16 +7,14 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
+                    <th>Name</th>
                     <th>Original Team</th>
                 </tr>
             </thead>
             <tbody>
     {% for player in players%}
             <tr>
-                <td>{{ player.first_name }}</td>
-                <td>{{ player.last_name }}</td>
+                <td>{{ player.name }}</td>
                 <td>{{ player.original_team }}</td>
             </tr>
     {% endfor %}

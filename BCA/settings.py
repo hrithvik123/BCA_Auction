@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'league',  # league app
     'auction',  # auction app
     'bootstrap4',
     'crispy_forms',

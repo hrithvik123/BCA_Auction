@@ -17,6 +17,15 @@ class Team(models.Model):
         return self.name
 
 
+# original ipl team details that will be fetched by the api
+class Original_Team(models.Model):
+    name = models.CharField(max_length=255, blank=False)
+    shortName = models.CharField(max_length=255, blank=False)
+
+    def __str__(self):
+        return self.name
+
+
 class Bidder(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE)
     team = models.ForeignKey(
@@ -27,14 +36,14 @@ class Bidder(models.Model):
 
 
 class Player(models.Model):
-    first_name = models.CharField(max_length=255, blank=False)
-    last_name = models.CharField(max_length=255, blank=False)
+    name = models.CharField(max_length=255, blank=False)
     team = models.ForeignKey(
         Team, on_delete=models.SET_NULL, null=True, default=None)
-    original_team = models.CharField(max_length=255, blank=True)
+    original_team = models.ForeignKey(
+        Original_Team, on_delete=models.CASCADE, null=True, default=None)
 
     def __str__(self):
-        return self.first_name + " " + self.last_name
+        return self.name
 
 
 class Auction(models.Model):
@@ -49,7 +58,10 @@ class Auction(models.Model):
         Team, on_delete=models.SET_NULL, null=True, default=None)
 
     def __str__(self):
-        return self.player_id.first_name+" "+self.player_id.last_name
+        return str(self.player_id.name)
+
+    def isExpired(self):
+        return (self.end_time < timezone.now())
 
 
 class Bid(models.Model):
@@ -59,11 +71,17 @@ class Bid(models.Model):
     bid_time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.auction_id
+        return str(self.auction_id)
 
 
-class Chat(models.Model):
-    auction_id = models.ForeignKey(Auction, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    message = models.TextField()
-    time_send = models.DateTimeField(default=timezone.now)
+class Stats(models.Model):
+    player = models.OneToOneField(Player, on_delete=models.CASCADE)
+    runs = models.IntegerField(default=0, blank=False)
+    wickets = models.IntegerField(default=0, blank=False)
+
+    @property
+    def points(self):
+        return (self.runs*2 + self.wickets*25)
+
+    def __str__(self):
+        return self.player.name
