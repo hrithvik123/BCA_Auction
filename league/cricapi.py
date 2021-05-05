@@ -1,4 +1,6 @@
 import requests
+import os
+from decouple import config
 
 
 def get_scorecard(match_id):
@@ -7,7 +9,7 @@ def get_scorecard(match_id):
     querystring = {"matchid": match_id, "seriesid": "2780"}
 
     headers = {
-        'x-rapidapi-key': "09f1c7ab99msh7a788e0948da842p1ed1dcjsnbd7378bdcb4d",
+        'x-rapidapi-key': config("RAPID_API_CRICKET_KEY"),
         'x-rapidapi-host': "dev132-cricket-live-scores-v1.p.rapidapi.com"
     }
 
@@ -29,7 +31,7 @@ def get_matches():
     querystring = {"seriesid": "2780", "status": "COMPLETED"}
 
     headers = {
-        'x-rapidapi-key': "09f1c7ab99msh7a788e0948da842p1ed1dcjsnbd7378bdcb4d",
+        'x-rapidapi-key': config("RAPID_API_CRICKET_KEY"),
         'x-rapidapi-host': "dev132-cricket-live-scores-v1.p.rapidapi.com"
     }
 
@@ -54,7 +56,7 @@ def league_teams():
     querystring = {"seriesid": "2780"}
 
     headers = {
-        'x-rapidapi-key': "09f1c7ab99msh7a788e0948da842p1ed1dcjsnbd7378bdcb4d",
+        'x-rapidapi-key': config("RAPID_API_CRICKET_KEY"),
         'x-rapidapi-host': "dev132-cricket-live-scores-v1.p.rapidapi.com"
     }
 
