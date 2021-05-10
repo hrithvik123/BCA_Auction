@@ -2,8 +2,8 @@
 {% block title %}<title>Team Lineup</title>{% endblock title %}
 {% block content %}
     <div class="container">
-        <h2>{{ user.team.name }}</h2>
-        <p>List of players in your team</p>
+        <h2>{{ current_team.name }}</h2>
+        <p>List of players</p>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -29,10 +29,9 @@
                 <td></td>
                 <td></td>
                 <td><p class='font-weight-bold'>Total Points</p></td>
-                <td><p class='font-weight-bolder'>{{ user.team.total_points }}</p></td>
+                <td><p class='font-weight-bolder'>{{ current_team.total_points }}</p></td>
             </tr>
             </tbody>
         </table>
     </div>
-    <a class="btn btn-outline-info" href="{% url 'team-edit' user.team.id %}">Change Team Name</a>
 {% endblock content %} 

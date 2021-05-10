@@ -16,6 +16,14 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def total_points(self):
+        team_players = Player.objects.filter(team=self)
+        point_calc = 0
+        for p in team_players:
+            point_calc += p.stats.points
+        return point_calc
+
 
 # original ipl team details that will be fetched by the api
 class Original_Team(models.Model):
@@ -81,7 +89,10 @@ class Stats(models.Model):
 
     @property
     def points(self):
-        return (self.runs*2 + self.wickets*25)
+        return (self.runs + self.wickets*25)
 
     def __str__(self):
         return self.player.name
+
+    # class Meta:
+    #     ordering = ['-points']

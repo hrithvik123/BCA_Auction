@@ -1,0 +1,48 @@
+{%extends 'auction/base.html' %}
+{% load crispy_forms_tags %}
+    {%block content%}
+    <div class="container">
+        <h2>Player Stats</h2>
+        <p>List of players and their stats in IPL 2021</p>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Local Team</th>
+                    <th>IPL 2021 Team</th>
+                    <th>Runs</th>
+                    <th>Wickets</th>
+                    <th>Points</th>
+                    {% if user.is_superuser %}
+                        <th>Actions</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+    {% for p in stats%}
+            <tr>
+                <td>{{ p.player.name }}</td>
+                <td>{{ p.player.team }}</td>
+                <td>{{ p.player.original_team }}</td>
+                <td>{{ p.runs }}</td>
+                <td>{{ p.wickets }}</td>
+                <td>{{ p.points }}</td>
+                {% if user.is_superuser %}
+                <td><button type="button" class="btn btn-light">
+                    <a href="{% url 'player-edit' p.player.id %}">Edit</a>
+                    </button></td>
+                {% endif %}
+            </tr>
+    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if user.is_authenticated %}
+        <div class="content-section">
+            <form method='POST'>
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-info" name='update_points'>Update player stats</button>
+            </form>
+        </div>
+    {% endif %}
+    {%endblock content%}

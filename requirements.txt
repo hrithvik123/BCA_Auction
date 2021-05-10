@@ -1,9 +1,16 @@
+amqp==5.0.6
 asgiref==3.3.3
 autopep8==1.5.6
+billiard==3.6.4.0
 bootstrap4==0.1.0
+celery==5.0.5
 certifi==2020.12.5
 cffi==1.14.5
 chardet==4.0.0
+click==7.1.2
+click-didyoumean==0.0.3
+click-plugins==1.1.1
+click-repl==0.1.6
 cricbuzz-py==0.1.2
 cryptography==3.4.7
 defusedxml==0.7.1
@@ -19,9 +26,11 @@ httpcore==0.12.3
 httpx==0.17.1
 idna==2.10
 jsonfield==3.1.0
+kombu==5.0.2
 oauthlib==3.1.0
 praw==7.2.0
 prawcore==2.0.0
+prompt-toolkit==3.0.18
 psycopg2==2.8.6
 psycopg2-binary==2.8.6
 pycodestyle==2.7.0
@@ -41,5 +50,7 @@ tekore==3.6.2
 toml==0.10.2
 update-checker==0.18.0
 urllib3==1.26.4
+vine==5.0.0
+wcwidth==0.2.5
 websocket-client==0.58.0
 whitenoise==5.2.0

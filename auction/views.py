@@ -19,7 +19,9 @@ from django.contrib.auth.decorators import login_required
 
 
 def home(request):
-    return render(request, 'auction/index.html')
+    teams = models.Team.objects.all()
+    teams = sorted(teams, key=lambda t: t.total_points, reverse=True)
+    return render(request, 'auction/index.html', {'teams': teams})
 
 
 def register(request):
@@ -57,15 +59,26 @@ class updateTeamView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 # edge case to implement - if user does not have a team, create. else go to list view
 
 
-class TeamLineUpListView(LoginRequiredMixin, ListView):
-    model = models.Player
-    template_name = 'auction/lineup.html'
-    context_object_name = 'players'
+class TeamDetailView(LoginRequiredMixin, DetailView):
+    model = models.Team
+    template_name = 'auction/team_detail.html'
+    context_object_name = 'current_team'
 
-    def get_queryset(self):
-        user = self.request.user
-        models.Team.objects.get_or_create(owner_id=user)
-        return models.Player.objects.filter(team=user.team)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['players'] = models.Player.objects.filter(team=self.object)
+        return context
+
+
+# class TeamLineUpListView(LoginRequiredMixin, ListView):
+#     model = models.Player
+#     template_name = 'auction/lineup.html'
+#     context_object_name = 'players'
+
+#     def get_queryset(self):
+#         user = self.request.user
+#         models.Team.objects.get_or_create(owner_id=user)
+#         return models.Player.objects.filter(team=user.team)
 
 
 class AuctionListView(LoginRequiredMixin, ListView):
@@ -114,13 +127,31 @@ class PlayerCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return False
 
 
-class PlayerListView(LoginRequiredMixin, ListView):
-    model = models.Player
-    template_name = 'auction/players_all.html'
-    context_object_name = 'players'
+# class PlayerListView(LoginRequiredMixin, ListView):
+#     model = models.Player
+#     template_name = 'auction/players_all.html'
+#     context_object_name = 'players'
 
-    def get_queryset(self):
-        return models.Player.objects.all()
+#     def get_queryset(self):
+#         return models.Player.objects.all()
+
+
+class PlayerUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = models.Player
+    template_name = 'auction/player_update.html'
+    success_url = ""
+    fields = ['name', 'team']
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+    def test_func(self):
+        if(self.request.user.is_superuser):
+            return True
+        return False
+
+    def get_success_url(self):
+        return reverse('player-list')
 
 
 class BidCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):

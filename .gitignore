@@ -111,4 +111,6 @@ secretkey.txt
 # migration caches
 BCA/__pycache__/
 auction/__pycache__/
-auction/migrations/
+auction/migrations/__pycache__
+league/__pycache__/
+league/migrations/__pycache__
