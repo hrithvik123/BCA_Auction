@@ -39,3 +39,11 @@ def create_stats(sender, instance, created, **kwargs):
         stats_row.runs = 0
         stats_row.wickets = 0
         stats_row.save()
+
+
+@receiver(post_save, sender=User)
+def create_team(sender, instance, created, **kwargs):
+    if created:
+        new_team = Team()
+        new_team.owner_id = instance
+        new_team.save()

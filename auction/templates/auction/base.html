@@ -23,7 +23,7 @@
   
                 <ul class = "navbar-nav">
                 {% if user.is_authenticated %}
-                  <a class="nav-item nav-link justify-content-center" href="{% url 'team-detail' user.team.id %}">My Team</a>
+                  <a class="nav-item nav-link justify-content-center" href="{% url 'lineup' %}">My Team</a>
                   <a class="nav-item nav-link justify-content-center" href="{% url 'player-list' %}">Player List</a>
                   <a class="nav-item nav-link justify-content-center" href="{% url 'auction-list' %}">Auctions</a>
                 </ul>
