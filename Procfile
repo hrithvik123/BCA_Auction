@@ -1,2 +1,2 @@
 web: gunicorn BCA.wsgi --log-file -
-worker: python manage.py celery worker -l info
+worker: celery -A BCA worker -l info
