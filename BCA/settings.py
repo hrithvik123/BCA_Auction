@@ -174,4 +174,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 django_heroku.settings(locals())
 
 # CELERY AND REDIS settings for heroku
-CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379')
+BROKER_POOL_LIMIT = 1
+CELERY_BROKER_URL = os.environ.get('CLOUDAMQP_URL')
