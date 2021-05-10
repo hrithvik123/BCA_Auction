@@ -175,4 +175,4 @@ django_heroku.settings(locals())
 
 # CELERY AND RABBITMQ settings for heroku
 BROKER_POOL_LIMIT = 3
-BROKER_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379')
+CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379')
